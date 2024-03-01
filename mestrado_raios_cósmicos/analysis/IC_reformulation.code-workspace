@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../Desktop/imagens_overleaf/testes_plots_ic"
+		},
+		{
+			"path": "../../../Desktop/Faculdade/HPCII"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"test.C": "cpp",
+			"Plot_Vector_H.C": "cpp",
+			"Plot_Vector_H (1).C": "cpp",
+			"initializer_list": "c",
+			"type_traits": "c",
+			"vector": "c",
+			"xstring": "c",
+			"xutility": "c",
+			"string": "cpp",
+			"iosfwd": "cpp"
+		}
+	}
+}
