@@ -17,15 +17,17 @@ Saida:
 """
 import sys
 import numpy as np
-from crpropa import (
-    TextOutput, Vector3d, Mpc, Sphere, ModuleList, PropagationBP, PhotoPionProduction,
-    CMB, IRB_Gilmore12, PhotoDisintegration, NuclearDecay, ElectronPairProduction,
-    MinimumEnergy, Redshift, MaximumTrajectoryLength, Grid3f, initTurbulence,
-    MagneticFieldGrid, PeriodicMagneticField, Source, SourcePosition, SourceIsotropicEmission,
-    SourceParticleType, SourcePowerLawSpectrum, ObserverSurface, ObserverNucleusVeto,
-    ObserverPhotonVeto, ObserverElectronVeto, Observer,ObserverNeutrinoVeto, nucleusId,turbulentCorrelationLength,nG,
-    eV, kpc, EeV,IRB_Dominguez11,MinimumEnergyPerParticleId,TeV
-)
+# from crpropa import (
+#     TextOutput, Vector3d, Mpc, Sphere, ModuleList, PropagationBP, PhotoPionProduction,
+#     CMB, IRB_Gilmore12, PhotoDisintegration, NuclearDecay, ElectronPairProduction,
+#     MinimumEnergy, Redshift, MaximumTrajectoryLength, Grid3f, initTurbulence,
+#     MagneticFieldGrid, PeriodicMagneticField, Source, SourcePosition, SourceIsotropicEmission,
+#     SourceParticleType, SourcePowerLawSpectrum, ObserverSurface, ObserverNucleusVeto,
+#     ObserverPhotonVeto, ObserverElectronVeto, Observer,ObserverNeutrinoVeto, nucleusId,turbulentCorrelationLength,nG,
+#     eV, kpc, EeV,IRB_Dominguez11,MinimumEnergyPerParticleId,TeV,SourceUniformRedshift,ObserverRedshiftWindow,EBL_Saldana21
+# )
+
+from crpropa import *
 
 def lmax_from_coherence_length(lmin, gridsize, coherence_length):
     n = 1000
@@ -46,7 +48,7 @@ def simulate(a, z, n_events, coherence_length, distance, b_field):
     neutrinos = True
     photons = electrons = False
     cmb = CMB()
-    ebl = IRB_Dominguez11()        
+    ebl = IRB_Saldana21()        
     for i in range(10):
         
         
@@ -66,6 +68,7 @@ def simulate(a, z, n_events, coherence_length, distance, b_field):
         source.add(SourcePosition(Vector3d(0, 0, 0)))
         source.add(SourceIsotropicEmission())
         source.add(SourceParticleType(nucleusId(a, z)))
+        source.add(SourceUniformRedshift(0, 1))
         source.add(SourcePowerLawSpectrum(*energy_range, -1.0))
 
         # Output setup
@@ -90,6 +93,7 @@ def simulate(a, z, n_events, coherence_length, distance, b_field):
         observer_cr.add(photon_veto)
         observer_cr.add(electron_veto)
         observer_cr.onDetection(output_cr)
+        observer_cr.add(ObserverRedshiftWindow(-0.1,0.1))
 
         observer_nu = Observer()
         observer_nu.add(observer_type)
@@ -97,6 +101,7 @@ def simulate(a, z, n_events, coherence_length, distance, b_field):
         observer_nu.add(photon_veto)
         observer_nu.add(electron_veto)
         observer_nu.onDetection(output_nu)
+        observer_nu.add(ObserverRedshiftWindow( -0.1, 0.1))
 
         #interatctions
         	
@@ -136,7 +141,7 @@ def simulate(a, z, n_events, coherence_length, distance, b_field):
 
         # break condition:  
 	#  neutrinos: we are studying ~PeV-EeV energies, so E>10 TeV is suitable
-        break_energy = MinimumEnergyPerParticleId(0.01 * EeV) # global minimum energy 
+        break_energy = MinimumEnergyPerParticleId(0.1 * EeV) # global minimum energy 
         break_energy.add( 12, 10 * TeV) # Electron Neutrino 
         break_energy.add(-12, 10 * TeV) #Eclectron Antineutrino
         break_energy.add( 14, 10 * TeV) #Muon Neutrino
