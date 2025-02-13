@@ -1,0 +1,54 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+*.egg-info/
+*.log
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Virtual environment
+.env/
+.venv/
+env/
+venv/
+
+# Conda environment files
+*.conda
+*.env
+*.lock
+
+# IDE configurations
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Build and CRPropa outputs
+build/
+dist/
+*.o
+*.a
+*.out
+*.exe
+
+# Simulation outputs
+dados_nitro/
+*.txt
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# SSH and credentials
+*.pem
+*.key
+*.crt
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.txt
