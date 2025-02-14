@@ -5,7 +5,7 @@
 #PBS -e esfera.err
 #PBS -o esfera.out
 #PBS -q serial
-#PBS -l nodes=1:ppn=8
+#PBS -l nodes=1:ppn=12
 
 
 
