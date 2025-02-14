@@ -36,12 +36,12 @@ def lmax_from_coherence_length(lmin, gridsize, coherence_length):
     return np.interp(coherence_length, lcs, lmaxs)
 
 def setup_output_files(a, z, distance, b_field, coherence_length, seed):
-    output_file_cr = f"sim-A_{int(a)}_Z_{int(z)}_R_{int(distance)}_Mpc_B_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-CR.txt"
+    output_file_cr = f"sim-A_{a}_Z_{z}_R_{distance}_Mpc_B_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-CR.txt"
     output_file_nu = f"sim-A_{int(a)}_Z_{int(z)}_R_{int(distance)}_Mpc_B_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-NU.txt"
     return output_file_cr, output_file_nu
 
-def simulate(a, z, n_events, coherence_length, distance, b_field):
-    n_events = n_events // 10
+def simulate(a, z, n_events, coherence_length, distance, B):
+    n_events = n_events 
     energy_range = (0.1 * EeV, 1000 * EeV)
     box_origin = Vector3d(0, 0, 0) * Mpc
     box_size = 10 * Mpc
@@ -49,7 +49,7 @@ def simulate(a, z, n_events, coherence_length, distance, b_field):
     photons = electrons = False
     cmb = CMB()
     ebl = IRB_Saldana21()        
-    for i in range(10):
+    for i in range(1):
         
         
         # Magnetic field setup
@@ -57,11 +57,11 @@ def simulate(a, z, n_events, coherence_length, distance, b_field):
         space = 0.1 * Mpc
         lmax = lmax_from_coherence_length(space * 2, box_size, coherence_length * Mpc)
         vgrid = Grid3f(box_origin, 200, space)
-        initTurbulence(vgrid, b_field * nG, space * 2, lmax, -11 / 3, random_seed)
+        initTurbulence(vgrid, B * nG, space * 2, lmax, -11 / 3, random_seed)
         b_field0 = MagneticFieldGrid(vgrid)
         b_field = PeriodicMagneticField(b_field0, Vector3d(4000, 4000, 4000) * Mpc, Vector3d(0), False)
 
-        output_file_cr, output_file_nu = setup_output_files(a, z, distance, b_field, coherence_length, i)
+        output_file_cr, output_file_nu = setup_output_files(a, z, distance, B, coherence_length, i)
         
         # Source setup
         source = Source()
@@ -166,6 +166,8 @@ def simulate(a, z, n_events, coherence_length, distance, b_field):
         output_cr.close()
         output_nu.close()
 
+        return output_cr, output_nu
+
 def main():
     if len(sys.argv) != 5:
         print("Uso: python script.py <NEvents> <CoherenceLength[Mpc]> <Distance[Mpc]> <BField[nG]>")
@@ -188,7 +190,7 @@ def main():
         n_events=n_events,
         coherence_length=coherence_length,
         distance=distance,
-        b_field=b_field,
+        B=b_field,
     )
 
 if __name__ == "__main__":
