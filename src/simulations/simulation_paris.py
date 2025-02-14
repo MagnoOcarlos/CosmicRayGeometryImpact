@@ -183,8 +183,8 @@ def main():
     print(f" - Campo Magnetico: {b_field} nG")
 
     simulate(
-        a=14,
-        z=7,
+        a=1,
+        z=1,
         n_events=n_events,
         coherence_length=coherence_length,
         distance=distance,
