@@ -36,8 +36,8 @@ def lmax_from_coherence_length(lmin, gridsize, coherence_length):
     return np.interp(coherence_length, lcs, lmaxs)
 
 def setup_output_files(a, z, distance, b_field, coherence_length, seed):
-    output_file_cr = f"sim-A_{int(a)}_Z_{int(z)}_R_{int(distance)}_Mpc_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-CR.txt"
-    output_file_nu = f"sim-A_{int(a)}_Z_{int(z)}_R_{int(distance)}_Mpc_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-NU.txt"
+    output_file_cr = f"sim-A_{int(a)}_Z_{int(z)}_R_{int(distance)}_Mpc_B_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-CR.txt"
+    output_file_nu = f"sim-A_{int(a)}_Z_{int(z)}_R_{int(distance)}_Mpc_B_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-NU.txt"
     return output_file_cr, output_file_nu
 
 def simulate(a, z, n_events, coherence_length, distance, b_field):
