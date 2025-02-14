@@ -36,7 +36,7 @@ def lmax_from_coherence_length(lmin, gridsize, coherence_length):
     return np.interp(coherence_length, lcs, lmaxs)
 
 def setup_output_files(a, z, distance, b_field, coherence_length, seed):
-    output_file_cr = f"sim-A_{a}_Z_{z}_R_{distance}_Mpc_B_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-CR.txt"
+    output_file_cr = f"sim-A_{a}_Z_{z}_R_{distance}_Mpc_B_{int(b_field)}nG_lc_{coherence_length}Mpc_seed{seed}-CR.txt"
     output_file_nu = f"sim-A_{int(a)}_Z_{int(z)}_R_{int(distance)}_Mpc_B_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-NU.txt"
     return output_file_cr, output_file_nu
 
@@ -49,7 +49,7 @@ def simulate(a, z, n_events, coherence_length, distance, B):
     photons = electrons = False
     cmb = CMB()
     ebl = IRB_Saldana21()        
-    for i in range(1):
+    for i in range(10):
         
         
         # Magnetic field setup
@@ -61,7 +61,7 @@ def simulate(a, z, n_events, coherence_length, distance, B):
         b_field0 = MagneticFieldGrid(vgrid)
         b_field = PeriodicMagneticField(b_field0, Vector3d(4000, 4000, 4000) * Mpc, Vector3d(0), False)
 
-        output_file_cr, output_file_nu = setup_output_files(a, z, distance, B, coherence_length, i)
+        output_file_cr, output_file_nu = setup_output_files(a, z, distance, B, coherence_length, random_seed)
         
         # Source setup
         source = Source()
