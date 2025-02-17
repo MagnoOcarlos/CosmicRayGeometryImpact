@@ -36,12 +36,12 @@ def lmax_from_coherence_length(lmin, gridsize, coherence_length):
     return np.interp(coherence_length, lcs, lmaxs)
 
 def setup_output_files(a, z, distance, b_field, coherence_length, seed):
-    output_file_cr = f"sim-A_{a}_Z_{z}_R_{distance}_Mpc_B_{int(b_field)}nG_lc_{coherence_length}Mpc_seed{seed}-CR.txt"
-    output_file_nu = f"sim-A_{int(a)}_Z_{int(z)}_R_{int(distance)}_Mpc_B_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-NU.txt"
+    output_file_cr = f"sim-A_{a}_Z_{z}_R_{int(distance)}_Mpc_B_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-CR.txt"
+    output_file_nu = f"sim-A_{a}_Z_{z}_R_{int(distance)}_Mpc_B_{b_field}nG_lc_{coherence_length}Mpc_seed{seed}-NU.txt"
     return output_file_cr, output_file_nu
 
 def simulate(a, z, n_events, coherence_length, distance, B):
-    n_events = n_events 
+    n_events = n_events //10
     energy_range = (0.1 * EeV, 1000 * EeV)
     box_origin = Vector3d(0, 0, 0) * Mpc
     box_size = 10 * Mpc
@@ -49,7 +49,7 @@ def simulate(a, z, n_events, coherence_length, distance, B):
     photons = electrons = False
     cmb = CMB()
     ebl = IRB_Saldana21()        
-    for i in range(10):
+    for i in range(0,10):
         
         
         # Magnetic field setup
@@ -160,13 +160,14 @@ def simulate(a, z, n_events, coherence_length, distance, B):
         sim.add(observer_cr)
         sim.add(observer_nu)
 
+        print(random_seed)
         sim.setShowProgress(True)
         sim.run(source, n_events, True)
         
         output_cr.close()
         output_nu.close()
 
-        return output_cr, output_nu
+        # return output_cr, output_nu
 
 def main():
     if len(sys.argv) != 5:
