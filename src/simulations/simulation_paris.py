@@ -50,7 +50,6 @@ def simulate(a, z, n_events, coherence_length, distance, B):
     cmb = CMB()
     ebl = IRB_Saldana21()        
     for i in range(0,10):
-        print(type(a),type(z))
         
         # Magnetic field setup
         random_seed = i + 1
