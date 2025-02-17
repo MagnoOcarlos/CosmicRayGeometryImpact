@@ -50,7 +50,7 @@ def simulate(a, z, n_events, coherence_length, distance, B):
     cmb = CMB()
     ebl = IRB_Saldana21()        
     for i in range(0,10):
-        
+        print(type(a),type(z))
         
         # Magnetic field setup
         random_seed = i + 1
@@ -134,9 +134,9 @@ def simulate(a, z, n_events, coherence_length, distance, B):
         nd.setHaveNeutrinos(neutrinos)
 
         # adiabatic losses
-        z = Redshift()
+        z_shift = Redshift()
 
-        processes = [pd_cmb, pd_ebl, ppp_cmb, ppp_ebl, epp_cmb, epp_ebl, nd, z]
+        processes = [pd_cmb, pd_ebl, ppp_cmb, ppp_ebl, epp_cmb, epp_ebl, nd, z_shift]
         propagator=PropagationBP(b_field, 1e-3, 1 * kpc, 10 * kpc)
 
         # break condition:  
@@ -161,7 +161,7 @@ def simulate(a, z, n_events, coherence_length, distance, B):
         sim.add(observer_nu)
 
         print(random_seed)
-        sim.setShowProgress(True)
+        sim.setShowProgress(False)
         sim.run(source, n_events, True)
         
         output_cr.close()
@@ -186,8 +186,8 @@ def main():
     print(f" - Campo Magnetico: {b_field} nG")
 
     simulate(
-        a=1,
-        z=1,
+        a=int(1),
+        z=int(1),
         n_events=n_events,
         coherence_length=coherence_length,
         distance=distance,
