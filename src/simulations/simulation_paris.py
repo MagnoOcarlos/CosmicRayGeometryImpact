@@ -169,14 +169,17 @@ def simulate(a, z, n_events, coherence_length, distance, B):
         # return output_cr, output_nu
 
 def main():
-    if len(sys.argv) != 5:
-        print("Uso: python script.py <NEvents> <CoherenceLength[Mpc]> <Distance[Mpc]> <BField[nG]>")
+    if len(sys.argv) != 7:
+        print("Uso: python script.py <NEvents> <CoherenceLength[Mpc]> <Distance[Mpc]> <BField[nG]> <A> <Z>") 
         sys.exit(1)
 
     n_events = int(sys.argv[1])
     coherence_length = float(sys.argv[2])
     distance = float(sys.argv[3])
     b_field = float(sys.argv[4])
+    a=int(sys.argv[5])
+    z=int(sys.argv[6])
+
 
     print(f"Iniciando simulacao com:")
     print(f" - Numero de Eventos: {n_events}")
@@ -185,8 +188,8 @@ def main():
     print(f" - Campo Magnetico: {b_field} nG")
 
     simulate(
-        a=int(1),
-        z=int(1),
+        a=a,
+        z=z,
         n_events=n_events,
         coherence_length=coherence_length,
         distance=distance,
