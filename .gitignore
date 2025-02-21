@@ -36,7 +36,7 @@ dist/
 # Simulation outputs
 dados_nitro/
 *.txt
-
+*.pdf
 # Logs and temp files
 *.log
 *.tmp
