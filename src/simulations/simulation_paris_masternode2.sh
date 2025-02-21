@@ -37,11 +37,11 @@ a=1
 z=1
 for lc in 1.0 
 do
-        for R in 100  200 #300 400 500 600 700 800 900 1000
+        for R in 1000 #  200 250 500 100
         do
-                for B in 0.1 0.0001
+                for B in 0.1  0.01 0.0001
                 do
-                        $exec_python simulation_paris.py 40000 $lc $R $B
+                        $exec_python simulation_paris.py 100000 $lc $R $B 1 1
 
                        	cat sim-A_${a}_Z_${z}_R_${R}_Mpc_B_${B}nG_lc_${lc}Mpc_seed1-CR.txt > ../../neutrinos/results/sim-A_${a}_Z_${z}_R_${R}_Mpc_B_${B}nG_lc_${lc}Mpc-CR.txt
                        	cat sim-A_${a}_Z_${z}_R_${R}_Mpc_B_${B}nG_lc_${lc}Mpc_seed1-NU.txt > ../../neutrinos/results/sim-A_${a}_Z_${z}_R_${R}_Mpc_B_${B}nG_lc_${lc}Mpc-NU.txt
