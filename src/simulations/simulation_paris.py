@@ -55,7 +55,7 @@ def simulate(a, z, n_events, coherence_length, distance, B):
         random_seed = i + 1
         space = 0.1 * Mpc
         lmax = lmax_from_coherence_length(space * 2, box_size, coherence_length * Mpc)
-        vgrid = Grid3f(box_origin, 200, space)
+        vgrid = Grid3f(box_origin, 1024, space)
         initTurbulence(vgrid, B * nG, space * 2, lmax, -11 / 3, random_seed)
         b_field0 = MagneticFieldGrid(vgrid)
         b_field = PeriodicMagneticField(b_field0, Vector3d(4000, 4000, 4000) * Mpc, Vector3d(0), False)
